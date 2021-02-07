@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 const Menu = () => {
   const padding = {
@@ -154,14 +155,24 @@ const App = () => {
   };
 
   return (
-    <div>
-      <h1>Software anecdotes</h1>
-      <Menu />
-      <AnecdoteList anecdotes={anecdotes} />
-      <About />
-      <CreateNew addNew={addNew} />
-      <Footer />
-    </div>
+    <Router>
+      <div>
+        <Menu />
+        <Switch>
+          <Route path='/about'>
+            <About />
+          </Route>
+          <Route path='/create'>
+            <CreateNew addNew={addNew} />
+          </Route>
+          <Route path='/'>
+            <h1>Software anecdotes</h1>
+            <AnecdoteList anecdotes={anecdotes} />
+          </Route>
+        </Switch>
+        <Footer />
+      </div>
+    </Router>
   );
 };
 
