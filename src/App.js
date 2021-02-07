@@ -103,8 +103,6 @@ const CreateNew = props => {
   // https://gist.github.com/asterisk37n/cb0093822596898b049eddc8518e2b64#file-app-js-L47
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(props);
-    console.log(content);
     props.addNew({
       content: content.value,
       author: author.value,
@@ -131,7 +129,6 @@ const CreateNew = props => {
   return (
     <div>
       <h2>create a new anecdote</h2>
-      {JSON.stringify(content)}
       <form onSubmit={handleSubmit}>
         <div>
           content
