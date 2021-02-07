@@ -103,6 +103,10 @@ const CreateNew = props => {
       votes: 0
     });
     setSubmitted(true);
+    props.setNotification('a new notification ' + content);
+    setTimeout(() => {
+      props.setNotification('');
+    }, 5000);
   };
 
   if (submitted) {
@@ -211,7 +215,9 @@ const App = () => {
     <Router>
       <div>
         {JSON.stringify(anecdotes)}
+        {/* {notification} */}
         <Menu />
+        {notification && notification}
         <Switch>
           <Route
             path='/anecdotes'
@@ -221,7 +227,7 @@ const App = () => {
             <About />
           </Route>
           <Route path='/create'>
-            <CreateNew addNew={addNew} />
+            <CreateNew addNew={addNew} setNotification={setNotification} />
           </Route>
           <Route path='/'>
             <h1>Software anecdotes</h1>
