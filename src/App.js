@@ -33,7 +33,7 @@ const AnecdoteList = ({ anecdotes }) => {
       <h2>Anecdotes</h2>
       <ul>
         {anecdotes.map(anecdote => (
-          <a href=''>
+          <Link>
             <li
               key={anecdote.id}
               onClick={() => {
@@ -42,7 +42,7 @@ const AnecdoteList = ({ anecdotes }) => {
             >
               {anecdote.content}
             </li>
-          </a>
+          </Link>
         ))}
       </ul>
     </div>
@@ -197,6 +197,7 @@ const App = () => {
   return (
     <Router>
       <div>
+        {JSON.stringify(anecdotes)}
         <Menu />
         <Switch>
           <Route
