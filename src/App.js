@@ -13,15 +13,15 @@ const Menu = () => {
   };
   return (
     <div>
-      <a href='#' style={padding}>
+      <Link to='/' style={padding}>
         anecdotes
-      </a>
-      <a href='#' style={padding}>
+      </Link>
+      <Link to='/create' style={padding}>
         create new
-      </a>
-      <a href='#' style={padding}>
+      </Link>
+      <Link to='/about' style={padding}>
         about
-      </a>
+      </Link>
     </div>
   );
 };
