@@ -7,6 +7,7 @@ import {
   useHistory,
   Redirect
 } from 'react-router-dom';
+import useField from './hooks/index';
 
 const Menu = () => {
   const padding = {
@@ -87,23 +88,24 @@ const Footer = () => (
 );
 
 const CreateNew = props => {
-  const [content, setContent] = useState('');
-  const [author, setAuthor] = useState('');
-  const [info, setInfo] = useState('');
+  const content = useField('text');
+  const author = useField('text');
+  const info = useField('text');
   const [submitted, setSubmitted] = useState(false);
 
   // https://gist.github.com/asterisk37n/cb0093822596898b049eddc8518e2b64#file-app-js-L47
   const handleSubmit = e => {
     e.preventDefault();
     console.log(props);
+    console.log(content);
     props.addNew({
-      content,
-      author,
-      info,
+      content: content.value,
+      author: author.value,
+      info: info.value,
       votes: 0
     });
     setSubmitted(true);
-    props.setNotification('a new notification ' + content);
+    props.setNotification('a new notification ' + content.value);
     setTimeout(() => {
       props.setNotification('');
     }, 5000);
@@ -122,30 +124,27 @@ const CreateNew = props => {
   return (
     <div>
       <h2>create a new anecdote</h2>
+      {JSON.stringify(content)}
       <form onSubmit={handleSubmit}>
         <div>
           content
           <input
             name='content'
-            value={content}
-            onChange={e => setContent(e.target.value)}
+            value={content.value}
+            onChange={content.onChange}
           />
         </div>
         <div>
           author
           <input
             name='author'
-            value={author}
-            onChange={e => setAuthor(e.target.value)}
+            value={author.value}
+            onChange={author.onChange}
           />
         </div>
         <div>
           url for more info
-          <input
-            name='info'
-            value={info}
-            onChange={e => setInfo(e.target.value)}
-          />
+          <input name='info' value={info.value} onChange={info.onChange} />
         </div>
         <button>create</button>
       </form>
@@ -214,7 +213,7 @@ const App = () => {
   return (
     <Router>
       <div>
-        {/* {JSON.stringify(anecdotes)} */}
+        {JSON.stringify(anecdotes)}
         {/* {notification} */}
         <Menu />
         {notification && notification}
