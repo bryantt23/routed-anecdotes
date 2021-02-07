@@ -214,7 +214,7 @@ const App = () => {
   return (
     <Router>
       <div>
-        {JSON.stringify(anecdotes)}
+        {/* {JSON.stringify(anecdotes)} */}
         {/* {notification} */}
         <Menu />
         {notification && notification}
