@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useHistory
+} from 'react-router-dom';
 
 const Menu = () => {
   const padding = {
@@ -20,16 +26,28 @@ const Menu = () => {
   );
 };
 
-const AnecdoteList = ({ anecdotes }) => (
-  <div>
-    <h2>Anecdotes</h2>
-    <ul>
-      {anecdotes.map(anecdote => (
-        <li key={anecdote.id}>{anecdote.content}</li>
-      ))}
-    </ul>
-  </div>
-);
+const AnecdoteList = ({ anecdotes }) => {
+  const history = useHistory();
+  return (
+    <div>
+      <h2>Anecdotes</h2>
+      <ul>
+        {anecdotes.map(anecdote => (
+          <a href=''>
+            <li
+              key={anecdote.id}
+              onClick={() => {
+                history.push(`/anecdotes/${anecdote.id}`);
+              }}
+            >
+              {anecdote.content}
+            </li>
+          </a>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
 const About = () => (
   <div>
@@ -154,11 +172,37 @@ const App = () => {
     setAnecdotes(anecdotes.map(a => (a.id === id ? voted : a)));
   };
 
+  const Anecdote = ({ id }) => {
+    const arr = id.history.location.pathname.split('/');
+    const anecdoteId = arr[arr.length - 1];
+    console.log(anecdoteId);
+    const anecdote = anecdoteById(anecdoteId);
+
+    if (!anecdote) return 'Not found';
+
+    // return 'hiii';
+    return (
+      <div>
+        <h3>
+          {anecdote.content} by {anecdote.author}
+        </h3>
+        <p>has {anecdote.votes} votes</p>
+        <p>
+          for more info see <a href={anecdote.info}>{anecdote.info}</a>
+        </p>
+      </div>
+    );
+  };
+
   return (
     <Router>
       <div>
         <Menu />
         <Switch>
+          <Route
+            path='/anecdotes'
+            render={anecdoteId => <Anecdote id={anecdoteId} />}
+          ></Route>
           <Route path='/about'>
             <About />
           </Route>
