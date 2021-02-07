@@ -4,7 +4,8 @@ import {
   Switch,
   Route,
   Link,
-  useHistory
+  useHistory,
+  Redirect
 } from 'react-router-dom';
 
 const Menu = () => {
@@ -89,16 +90,30 @@ const CreateNew = props => {
   const [content, setContent] = useState('');
   const [author, setAuthor] = useState('');
   const [info, setInfo] = useState('');
+  const [submitted, setSubmitted] = useState(false);
 
+  // https://gist.github.com/asterisk37n/cb0093822596898b049eddc8518e2b64#file-app-js-L47
   const handleSubmit = e => {
     e.preventDefault();
+    console.log(props);
     props.addNew({
       content,
       author,
       info,
       votes: 0
     });
+    setSubmitted(true);
   };
+
+  if (submitted) {
+    return (
+      <Redirect
+        to={{
+          pathname: '/'
+        }}
+      />
+    );
+  }
 
   return (
     <div>
@@ -175,12 +190,10 @@ const App = () => {
   const Anecdote = ({ id }) => {
     const arr = id.history.location.pathname.split('/');
     const anecdoteId = arr[arr.length - 1];
-    console.log(anecdoteId);
     const anecdote = anecdoteById(anecdoteId);
 
     if (!anecdote) return 'Not found';
 
-    // return 'hiii';
     return (
       <div>
         <h3>
