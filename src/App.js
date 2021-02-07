@@ -93,6 +93,13 @@ const CreateNew = props => {
   const info = useField('text');
   const [submitted, setSubmitted] = useState(false);
 
+  const handleReset = e => {
+    e.preventDefault();
+    content.onReset();
+    author.onReset();
+    info.onReset();
+  };
+
   // https://gist.github.com/asterisk37n/cb0093822596898b049eddc8518e2b64#file-app-js-L47
   const handleSubmit = e => {
     e.preventDefault();
@@ -147,6 +154,7 @@ const CreateNew = props => {
           <input name='info' value={info.value} onChange={info.onChange} />
         </div>
         <button>create</button>
+        <button onClick={handleReset}>reset</button>
       </form>
     </div>
   );
